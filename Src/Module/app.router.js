@@ -1,5 +1,6 @@
 
 import categoriesRouter from './Categories/Categories.router.js';
+
 export const appRouter = (app, express) => {
     app.use(express.json());
 
