@@ -49,6 +49,5 @@ const userSchema = new Schema({
     timestamps: true,//وينتا انضافت الصورة
 }
 );
-
 const userModel = mongoose.models.user || model('User', userSchema);//cat table
 export default userModel;
