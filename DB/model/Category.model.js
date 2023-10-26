@@ -1,10 +1,10 @@
-import mongoose, { Schema, model, types } from 'mongoose'
+import mongoose, { Schema, model, Types} from 'mongoose'
 
 const categorySchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
     },
     slug: {
         type: String,
@@ -12,16 +12,10 @@ const categorySchema = new Schema({
     },
     image: {
         type: Object,
-        required: true,
+        // required: true,
     },
-    createdBy: {
-        type: Types.ObjectId,
-        ref: 'User'
-    },
-    updatedBy: {
-        type: Types.ObjectId,
-        ref: 'User'
-    },
+    createdBy: { type: Types.ObjectId, ref: 'User' },
+    updatedBy: { type: Types.ObjectId, ref: 'User' },
 }, {
     timestamps: true,//وينتا انضافت الصورة
 }

@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, types } from 'mongoose'
+import mongoose, { Schema, model, Types } from 'mongoose'
 
 const userSchema = new Schema({
     name: {
@@ -49,5 +49,5 @@ const userSchema = new Schema({
     timestamps: true,//وينتا انضافت الصورة
 }
 );
-const userModel = mongoose.models.user || model('User', userSchema);//cat table
+const userModel = mongoose.models.User || model('User', userSchema);//cat table
 export default userModel;
