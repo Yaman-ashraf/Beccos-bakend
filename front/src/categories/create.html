@@ -378,30 +378,38 @@
                                     </div>
                                 </div>
                                 <div class="widget-content widget-content-area">
-                                    <form enctype="multipart/form-data">
+                                    <form enctype="multipart/form-data" id="createCategoryForm">
                                     <div class="row">
                                         <div class="col-lg-6 col-12 ">
-                                            <form method="post">
                                                 <div class="form-group">
                                                     <label for="t-text" class="visually-hidden">الإسم</label>
                                                     <input id="name" type="text" name="name" placeholder="اسم التصنيف..." class="form-control" required>
                                                 </div>
-                                            </form>
+                                            
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5">
+                                    <!-- <div class="row mt-5">
                                         <div class="col-lg-6 col-12 ">
                                             <form method="post">
                                                 <div class="form-group">
                                                     <label for="t-text" class="visually-hidden">صورة التصنيف</label>
                                                     <input id="file" type="file" name="mainImage" class="form-control" required>
-                                                    <input type="button" value="اضافة" onclick="createCategory(event)" name="txt" class="mt-4 btn btn-primary">
                                                 </div>
-                                            </form>
+                                           
                                         </div>
                                     </div>
+                                </div>
+                                 -->
 
+                                    <div class="row mt-5">
+                                        <div class="col-lg-6 col-12 ">
+                                            <div class="form-group">
+                                          <input type="submit" x value="اضافة"  name="txt" class="mt-4 btn btn-primary">
+                                          </div>
+                                        </div>
+                                    </div>
+                                </form>
                                 </form>
                                 </div>
                             </div>
@@ -444,6 +452,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.js" integrity="sha512-3PL7jW3xI1EjF2Hfqwv5u6nKG/BnUbWytnJDhsY/q5CbIB5XzoHNhJvgmFeVD7xgC9DbKDm+gPP9uDAAfLAZUA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../../assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="categories.js"></script>
 </body>
 </html>
