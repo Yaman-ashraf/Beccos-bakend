@@ -12,7 +12,7 @@ export const appRouter = (app, express) => {
         return res.json({ message: "WELCOME" });
     })
 
-    app.use("/categories",categoriesRouter);
+    app.use("/categories", categoriesRouter);
 
     app.get("*", (req, res) => {
         return res.status(404).json({ message: "Page Not Foundddd" });

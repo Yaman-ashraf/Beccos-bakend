@@ -12,7 +12,7 @@ const categorySchema = new Schema({
     },
     image: {
         type: Object,
-        // required: true,
+        required: true,
     },
     createdBy: { type: Types.ObjectId, ref: 'User' },
     updatedBy: { type: Types.ObjectId, ref: 'User' },
