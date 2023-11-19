@@ -1,5 +1,6 @@
 
 import connectDB from '../../DB/model/connection.js';
+import authRouter from './Auth/Auth.router.js';
 import categoriesRouter from './Categories/Categories.router.js';
 import cors from 'cors';
 
@@ -12,6 +13,7 @@ export const appRouter = (app, express) => {
         return res.json({ message: "WELCOME" });
     })
 
+    app.use("/auth",authRouter);
     app.use("/categories", categoriesRouter);
 
     app.get("*", (req, res) => {
