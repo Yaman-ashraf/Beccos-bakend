@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Types} from 'mongoose'
+import mongoose, { Schema, model, Types } from 'mongoose'
 
 const categorySchema = new Schema({
     name: {
@@ -14,8 +14,13 @@ const categorySchema = new Schema({
         type: Object,
         required: true,
     },
-    createdBy: { type: Types.ObjectId, ref: 'User' },
-    updatedBy: { type: Types.ObjectId, ref: 'User' },
+    status: {
+        type: String,
+        default: 'Active',
+        enum: ['Active', 'Not_Active'],
+    },
+    createdBy: { type: Types.ObjectId, ref: 'User', required: true },
+    updatedBy: { type: Types.ObjectId, ref: 'User', required: true },
 }, {
     timestamps: true,//وينتا انضافت الصورة
 }
