@@ -23,7 +23,6 @@ const categorySchema = new Schema({
     updatedBy: { type: Types.ObjectId, ref: 'User', required: true },
 }, {
     timestamps: true,//وينتا انضافت الصورة
-}
-);
+});
 const categoryModel = mongoose.models.Category || model('Category', categorySchema);//cat table
 export default categoryModel;
