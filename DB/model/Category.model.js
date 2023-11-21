@@ -25,4 +25,5 @@ const categorySchema = new Schema({
     timestamps: true,//وينتا انضافت الصورة
 });
 const categoryModel = mongoose.models.Category || model('Category', categorySchema);//cat table
+
 export default categoryModel;
