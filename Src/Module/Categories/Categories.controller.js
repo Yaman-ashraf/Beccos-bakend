@@ -20,19 +20,16 @@ export const createCategory = async (req, res) => {
 }
 
 export const getCategories = async (req, res) => {
-    const categories = await categoryModel.find();
-    return res.status(200).json({ message: "Success", categories });
+    const categories = await categoryModel.find().populate('products'); return res.status(200).json({ message: "Success", categories });
 }
 
 export const getActiveCategories = async (req, res) => {
-    const categories = await categoryModel.find({ status: 'Active' });
-    return res.status(200).json({ message: "Success", categories });
+    const categories = await categoryModel.find({ status: 'Active' }).populate('products'); return res.status(200).json({ message: "Success", categories });
 }
 
 export const getCategory = async (req, res) => {
     const { id } = req.params;
-    const category = await categoryModel.findById(id);
-    return res.status(200).json({ message: "Success", category });
+    const category = await categoryModel.findById(id).populate('products'); return res.status(200).json({ message: "Success", category });
 
 }
 
