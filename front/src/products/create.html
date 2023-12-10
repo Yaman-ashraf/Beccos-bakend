@@ -269,7 +269,7 @@
             <div class="shadow-bottom"></div>
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
-                    <a href="index.html" aria-expanded="false" class="dropdown-toggle">
+                    <a href="../categories/index.html" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                             <span>التصنيفات</span>
@@ -278,13 +278,14 @@
                 </li>
 
                 <li class="menu">
-                    <a href="../products/index.html" aria-expanded="false" class="dropdown-toggle">
+                    <a href="index.html" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                             <span>المنتجات</span>
                         </div>
                     </a>
                 </li>
+
 
 
 
@@ -365,7 +366,7 @@
                                 <div class="widget-header">
                                     <div class="row align-items-center justify-content-evenly">
                                         <div class="col-md-4">
-                                            <h4>التصنيفات</h4>
+                                            <h4>المنتجات</h4>
                                         </div>
                                         <div class="col-md-4 text-end">
                                             <a class="btn btn-primary " href="create.html">اضافة</a>
@@ -383,18 +384,64 @@
                                 <div class="widget-header">
                                     <div class="row">
                                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h4>انشاء تصنيف جديد</h4>
+                                            <h4>اضافة منتج جديد</h4>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content widget-content-area">
-                                    <form enctype="multipart/form-data" id="createCategoryForm">
-                                    <div class="row">
+                                    <form enctype="multipart/form-data" id="createProductForm">
+                                    <div class="row ">
                                         <div class="col-lg-6 col-12 ">
                                                 <div class="form-group">
-                                                    <label for="t-text" class="visually-hidden">الإسم</label>
-                                                    <input id="name" type="text" name="name" placeholder="اسم التصنيف..." class="form-control" required>
+                                                    <label for="name" >اسم المنتج</label>
+                                                    <input id="name" type="text" name="name" placeholder="اسم المنتج..." class="form-control" required>
                                                 </div>
+                                         </div> 
+                                         
+                                         <div class="col-lg-6 col-12 ">
+                                                <div class="form-group">
+                                                    <label for="stock" > الكمية </label>
+                                                    <input id="stock" type="number"  name="stock" class="form-control" required>
+                                                </div>
+                                         </div>
+                                         
+                                         <div class="col-lg-6 col-12 ">
+                                                <div class="form-group">
+                                                    <label for="price" >سعر المنتج </label>
+                                                    <input id="price" type="number"  name="price" class="form-control" required>
+                                                </div>
+                                        </div> 
+                                        
+                                        <div class="col-lg-6 col-12 ">
+                                                <div class="form-group">
+                                                    <label for="discount" > قيمة الخصم </label>
+                                                    <input id="discount" type="number" value="0" name="discount" class="form-control" required>
+                                                </div>
+                                        </div> 
+                                        
+                                        <div class=" col-12 ">
+                                                <div class="form-group">
+                                                    <label for="image" >صورة المنتج </label>
+                                                    <input id="image" type="file"  name="image" class="form-control" required>
+                                                </div>
+                                        </div>
+
+                                        <div class=" col-12 ">
+                                            <div class="form-group">
+                                                <label for="subImages" >صور المنتج الفرعية </label>
+                                                <input id="subImages" type="file"  name="subImages" class="form-control" required multiple>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class=" col-12 ">
+                                                <div class="form-group">
+                                                    <label for="description" >وصف المنتج </label>
+                                                    <textarea id="description"  name="description" class="form-control" required></textarea>
+                                                </div>
+                                        </div>
+                                                
+
+                                            
                                             
                                         </div>
                                     </div>

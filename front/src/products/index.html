@@ -269,7 +269,7 @@
             <div class="shadow-bottom"></div>
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
-                    <a href="index.html" aria-expanded="false" class="dropdown-toggle">
+                    <a href="../categories/index.html" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                             <span>التصنيفات</span>
@@ -278,14 +278,13 @@
                 </li>
 
                 <li class="menu">
-                    <a href="../products/index.html" aria-expanded="false" class="dropdown-toggle">
+                    <a href="index.html" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                             <span>المنتجات</span>
                         </div>
                     </a>
                 </li>
-
 
 
             </ul>
@@ -365,7 +364,7 @@
                                 <div class="widget-header">
                                     <div class="row align-items-center justify-content-evenly">
                                         <div class="col-md-4">
-                                            <h4>التصنيفات</h4>
+                                            <h4>المنتجات</h4>
                                         </div>
                                         <div class="col-md-4 text-end">
                                             <a class="btn btn-primary " href="create.html">اضافة</a>
@@ -378,49 +377,38 @@
                     </div>
                     <div class="row layout-top-spacing">
 
-                        <div id="basic" class="col-lg-12 layout-spacing">
+                        <div id="tableCustomMixed" class="col-lg-12 col-12 layout-spacing">
                             <div class="statbox widget box box-shadow">
                                 <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h4>انشاء تصنيف جديد</h4>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="widget-content widget-content-area">
-                                    <form enctype="multipart/form-data" id="createCategoryForm">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12 ">
-                                                <div class="form-group">
-                                                    <label for="t-text" class="visually-hidden">الإسم</label>
-                                                    <input id="name" type="text" name="name" placeholder="اسم التصنيف..." class="form-control" required>
-                                                </div>
-                                            
-                                        </div>
+
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+
+                                                    <th class="text-center" scope="col">الإسم</th>
+                                                    <th class="text-center" scope="col">الصورة</th>
+                                                    <th class="text-center" scope="col">الحالة</th>
+                                                    <th class="text-center" scope="col">الأكشن</th>
+
+                                                    <th class="text-center" scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="products">
+
+
+
+
+                                            </tbody>
+                                        </table>
                                     </div>
 
-                                    <!-- <div class="row mt-5">
-                                        <div class="col-lg-6 col-12 ">
-                                            <form method="post">
-                                                <div class="form-group">
-                                                    <label for="t-text" class="visually-hidden">صورة التصنيف</label>
-                                                    <input id="file" type="file" name="mainImage" class="form-control" required>
-                                                </div>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                                 -->
 
-                                    <div class="row mt-5">
-                                        <div class="col-lg-6 col-12 ">
-                                            <div class="form-group">
-                                          <input type="submit" x value="اضافة"  name="txt" class="mt-4 btn btn-primary">
-                                          </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                </form>
+
                                 </div>
                             </div>
                         </div>
@@ -462,7 +450,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.js" integrity="sha512-3PL7jW3xI1EjF2Hfqwv5u6nKG/BnUbWytnJDhsY/q5CbIB5XzoHNhJvgmFeVD7xgC9DbKDm+gPP9uDAAfLAZUA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="categories.js"></script>
+    <script src="../../assets/js/custom.js"></script>
+    <script src="products.js"></script>
 </body>
 </html>
