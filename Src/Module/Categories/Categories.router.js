@@ -6,9 +6,7 @@ import endPoint from "./Categories.endpoint.js";
 
 const router = Router();
 
-router.post('/', auth(endPoint.create), fileUpload(fileValidation.image).fields([
-    { name: 'mainImage', maxCount: 1 }
-]), categoriesController.createCategory)
+router.post('/', auth(endPoint.create), categoriesController.createCategory)
 
 router.get('/', categoriesController.getCategories)
 router.get('/active', categoriesController.getActiveCategories)
