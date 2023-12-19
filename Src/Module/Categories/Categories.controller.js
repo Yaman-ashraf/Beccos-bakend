@@ -7,13 +7,8 @@ export const createCategory = async (req, res) => {
 
     const slug = slugify(name);
 
-    const { secure_url, public_id } = await cloudinary.uploader.upload(req.files.mainImage[0].path, { //return url&id for photo
-        folder: `${process.env.APP_NAME}/categories`
-    })
-
     const category = await categoryModel.create({
-        name, slug, image: { secure_url, public_id },
-        createdBy: req.user._id, updatedBy: req.user._id
+        name, slug, createdBy: req.user._id, updatedBy: req.user._id
     });
 
     return res.status(201).json({ message: "SUCCESS", category });
