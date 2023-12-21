@@ -44,6 +44,7 @@ export const createProduct = async (req, res) => {
         return res.status(500).json({ message: "Error", error: error.stack });
     }
 }
+
 export const getProducts = async (req, res) => {
     try {
         let queryObj = { ...req.query };
@@ -64,10 +65,15 @@ export const getProducts = async (req, res) => {
                 name: { $regex: req.query.search, $options: 'i' }
             });
         }
-        const products = await mongooseQuery.sort(req.query.sort?.replaceAll(',', ' ')).select(req.query.fields.replaceAll(',', ' '));
+
+        const sortQuery = req.query.sort?.replaceAll(',', ' ');
+        const fieldsQuery = req.query.fields?.replaceAll(',', ' ');
+        const products = await mongooseQuery.sort(sortQuery).select(fieldsQuery);
+
+        // const products = await mongooseQuery.sort(req.query.sort?.replaceAll(',', ' ')).select(req.query.fields.replaceAll(',', ' '));
         const counts = await productModel.estimatedDocumentCount();
         return res.status(200).json({
-            message: "Seccess",
+            message: "Success",
             count: products.length, total: counts,
             products
         });
@@ -76,25 +82,25 @@ export const getProducts = async (req, res) => {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
     }
 }
+
 export const getActiveProducts = async (req, res) => {
     try {
         const products = await productModel.find({ status: 'Active' }).populate({
             path: 'categoryId',
         });
-        return res.status(200).json({ message: "Seccess", products });
+        return res.status(200).json({ message: "Success", products });
 
     } catch (erroe) {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
     }
 }
 
-
 export const getProduct = async (req, res) => {
     try {
         const product = await productModel.findById(req.params.id).populate({
             path: 'categoryId',
         });
-        return res.status(200).json({ message: "Seccess", product });
+        return res.status(200).json({ message: "Success", product });
 
     } catch (erroe) {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
