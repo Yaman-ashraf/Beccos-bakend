@@ -56,10 +56,10 @@ export const getProducts = async (req, res) => {
         queryObj = queryObj.replace(/\b(gt|gte|lt|lte|in|nin|eq|neq)\b/g, match => `$${match}`)
         queryObj = JSON.parse(queryObj);//برجعهم 
         const { skip, limit } = pagination(req.query.page, req.query.limit);
-        const mongooseQuery = productModel.find(queryObj).skip(skip).limit(limit)
-        .populate({
-            path: 'categoryId',
-        });
+        const mongooseQuery = productModel.find(queryObj).skip(skip).limit(limit);
+        // .populate({
+        //     path: 'categoryId',
+        // });
         if (req.query.search) {
             mongooseQuery.find({
                 name: { $regex: req.query.search, $options: 'i' }
