@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password, phone } = req.body;
+        const { name, email, password } = req.body;
 
         const user = await userModel.findOne({ email });
         if (user) {
@@ -14,7 +14,7 @@ export const signup = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUND));
 
-        const createUser = await userModel.create({ name, email, password: hashedPassword, phone });
+        const createUser = await userModel.create({ name, email, password: hashedPassword });
 
         if (!createUser) {
             return res.status(400).json({ message: "Error while creating user" });
