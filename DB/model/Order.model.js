@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types, model } from "mongoose";
 const orderSchema = new Schema({
-    user: {
+    userId: {
         type: Types.ObjectId,
         ref: 'User',
         required: true,
@@ -13,7 +13,7 @@ const orderSchema = new Schema({
         productId: {
             type: Types.ObjectId,
             required: true,
-            ref: Product,
+            ref: 'Product',
         },
         unitPrice: {
             type: Number,
@@ -33,10 +33,10 @@ const orderSchema = new Schema({
         required: true,
     },
     address: {
-        type: Number,
+        type: String,
         required: true,
     },
-    phoneNumber: {
+    phone: {
         type: Number,
         required: true,
     },

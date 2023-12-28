@@ -14,4 +14,6 @@ router.post('/', auth(endPoint.create), fileUpload(fileValidation.image).fields(
 router.get('/', productsController.getProducts);
 router.get('/active', productsController.getActiveProducts);
 router.get('/:id', productsController.getProduct);
+router.delete('/:id', auth(endPoint.delete), productsController.deleteProduct);
+
 export default router;

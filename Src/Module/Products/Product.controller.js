@@ -106,3 +106,27 @@ export const getProduct = async (req, res) => {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
     }
 }
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        // Check if the product exists
+        const existingProduct = await productModel.findById(productId);
+        if (!existingProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        // Perform the deletion
+        await productModel.findByIdAndDelete(productId);
+
+        await cloudinary.uploader.destroy(existingProduct.image.public_id);
+        for (const subImage of existingProduct.subImages) {
+            await cloudinary.uploader.destroy(subImage.public_id);
+        }
+
+        return res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Error", error: error.stack });
+    }
+}
