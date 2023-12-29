@@ -14,6 +14,7 @@ export const getAllSlider = async (req, res) => {
     const sliders = await sliderModel.find({});
     return res.json({ message: "Success", count: sliders.length ,sliders });
 }
+
 export const getActiveSlider = async (req, res) => {
     const sliders = await sliderModel.find({ status: 'Active' });
     return res.json({ message: "Success", count: sliders.length ,sliders });
