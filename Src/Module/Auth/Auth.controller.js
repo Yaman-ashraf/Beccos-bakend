@@ -8,7 +8,6 @@ export const signup = async (req, res) => {
         const { name, email, password, phone } = req.body;
 
         const user = await userModel.findOne({ email });
-        // return res.json(req.body.user);
 
         if (user) {
             return res.status(409).json({ message: "Email already exists" });
