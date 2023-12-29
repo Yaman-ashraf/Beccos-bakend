@@ -32,7 +32,7 @@ const productSchema = new Schema({
     image: {
         type: Object,
         required: true,
-    }, 
+    },
     subImages: [
         {
             type: Object,
@@ -53,8 +53,19 @@ const productSchema = new Schema({
     createdBy: { type: Types.ObjectId, ref: 'User', required: true },
     updatedBy: { type: Types.ObjectId, ref: 'User', required: true },
 }, {
-    timestamps: true,//وينتا انضافت الصورة
+    timestamps: true, //وينتا انضافت الصورة
+    toJSON:
+        { virtuals: true },
+    toObject:
+        { virtuals: true }
 });
+
+productSchema.virtual('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'productId'
+})
+
 const productModel = mongoose.models.Product || model('Product', productSchema);//cat table
 
 export default productModel;

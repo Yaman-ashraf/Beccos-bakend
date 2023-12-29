@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import categoryModel from "../../../DB/model/Category.model.js";
 import cloudinary from "../../Services/cloudinary.js";
+import productModel from "../../../DB/model/Product.model.js";
 
 export const createCategory = async (req, res) => {
     const name = req.body.name.toLowerCase();
@@ -37,4 +38,10 @@ export const deleteCategory = async (req, res) => {
     // await cloudinary.uploader.destroy(category.image.public_id);
     await categoryModel.findByIdAndDelete(id);
     return res.status(200).json({ message: "Success" });
+}
+
+export const getSimilarProduct = async (req, res) => {
+    const { categoryId } = req.params;
+    const products = await productModel.find({ categoryId }).limit(10);
+    return res.json(products);
 }

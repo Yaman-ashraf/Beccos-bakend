@@ -66,17 +66,58 @@ export const getProducts = async (req, res) => {
             });
         }
 
-        const sortQuery = req.query.sort?.replaceAll(',', ' ');
-        const fieldsQuery = req.query.fields?.replaceAll(',', ' ');
-        const products = await mongooseQuery.sort(sortQuery).select(fieldsQuery);
+        const products = await mongooseQuery.sort(req.query.sort?.replaceAll(',', ' ')).
+            select(req.query.fields?.replaceAll(',', ' ')).populate(
+                'reviews',
+            );
 
-        // const products = await mongooseQuery.sort(req.query.sort?.replaceAll(',', ' ')).select(req.query.fields.replaceAll(',', ' '));
         const counts = await productModel.estimatedDocumentCount();
+
+        //rating avg
+        for (let i = 0; i < products.length; i++) {
+            let calcRating = 0;
+            for (let j = 0; j < products[i].reviews.length; j++) {
+                calcRating += products[i].reviews[j].rating;
+            }
+            let avgRating = calcRating / products[i].reviews.length;
+            const product = products[i].toObject();
+            product.avgRating = avgRating;
+            products[i] = product;
+        }
+
         return res.status(200).json({
             message: "Success",
             count: products.length, total: counts,
             products
         });
+
+    } catch (error) {
+        return res.status(500).json({ message: "Error", error: error.stack })
+    }
+}
+
+export const getProduct = async (req, res) => {
+    try {
+        let product = await productModel.findById(req.params.id).populate([{
+            path: 'categoryId',
+        }, {
+            path: 'reviews'
+        }]);
+
+        //calc rating
+        let calcRating = 0;
+        product = product.toObject();
+        for (let i = 0; i < product.reviews.length; i++) {
+            calcRating += product.reviews[i].rating;
+        }
+
+        let avgRating = 0;
+        if (product.reviews.length > 0) {
+            avgRating = calcRating / product.reviews.length;
+            product.avgRating = avgRating;
+        }
+
+        return res.status(200).json({ message: "Success", product });
 
     } catch (erroe) {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
@@ -89,18 +130,6 @@ export const getActiveProducts = async (req, res) => {
             path: 'categoryId',
         });
         return res.status(200).json({ message: "Success", products });
-
-    } catch (erroe) {
-        return res.status(500).json({ message: "Error", erroe: erroe.stack })
-    }
-}
-
-export const getProduct = async (req, res) => {
-    try {
-        const product = await productModel.findById(req.params.id).populate({
-            path: 'categoryId',
-        });
-        return res.status(200).json({ message: "Success", product });
 
     } catch (erroe) {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
