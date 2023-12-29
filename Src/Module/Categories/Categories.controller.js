@@ -41,7 +41,7 @@ export const deleteCategory = async (req, res) => {
 }
 
 export const getSimilarProduct = async (req, res) => {
-    const { categoryId } = req.params;
-    const products = await productModel.find({ categoryId }).limit(10);
-    return res.json(products);
+    const { categoryId, productId } = req.params;
+    const products = await productModel.find({ categoryId, _id: { $ne: productId } }).limit(10);
+    return res.json({ message: "Success", products });
 }

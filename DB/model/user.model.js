@@ -15,13 +15,13 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
-    phone: {
-        type: String,
-        unique: true,
-    },
     password: {
         type: String,
         required: true,
+    },
+    phone: {
+        type: Number,
+        // required: true,
     },
     confirmEmail: {
         type: Boolean,

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role = 'User' } = req.body;
 
         const user = await userModel.findOne({ email });
 
@@ -15,14 +15,16 @@ export const signup = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUND));
 
-        const createUser = await userModel.create({ name, email, password: hashedPassword });
+        const createUser = await userModel.create({ name, email, password: hashedPassword, role });
 
         if (!createUser) {
             return res.status(400).json({ message: "Error while creating user" });
         }
+
         const token = jwt.sign({ email }, process.env.SIGNUPTOKEN);
         const link = `${req.protocol}://${req.headers.host}/auth/${token}`
         await sendEmail(email, "Confirm Email", `<a href="${link}">Confirm</a>`);
+
         return res.status(201).json({ message: "Success", createUser });
     } catch (error) {
         return res.status(500).json({ message: "Catch an error", error: error.stack });
@@ -47,16 +49,19 @@ export const confirmEmail = async (req, res) => {
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;
+
     //check email is exists?
     const user = await userModel.findOne({ email });
     if (!user) {
         return res.status(404).json({ message: "Invalid data" });
     }
+
     //check password
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
         return res.status(404).json({ message: "Invalid data" });
     }
+
     //check confirmEmail
     if (!user.confirmEmail) {
         return res.status(404).json({ message: "Please confirm your E-mail" });
