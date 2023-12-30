@@ -10,7 +10,7 @@ const sliderSchema = new Schema({
         default: 'Active',
         enum: ['Active', 'Not_Active'],
     },
-    link:{
+    link: {
         type: String,
     },
     createdBy: { type: Types.ObjectId, ref: 'User', required: true },

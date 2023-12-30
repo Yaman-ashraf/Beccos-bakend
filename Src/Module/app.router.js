@@ -7,6 +7,7 @@ import slidersRouter from './Slider/Slider.router.js';
 import cartRouter from './Cart/Cart.router.js';
 import orderRouter from './Order/Order.router.js';
 import userRouter from './User/User.router.js';
+import brandRouter from './Brand/Brand.router.js';
 import cors from 'cors';
 
 export const appRouter = (app, express) => {
@@ -25,6 +26,9 @@ export const appRouter = (app, express) => {
     app.use("/cart", cartRouter);
     app.use("/order", orderRouter);
     app.use("/user", userRouter);
+    app.use("/brand", brandRouter);
+
+
     app.get("*", (req, res) => {
         return res.status(404).json({ message: "Page Not Found" });
     })

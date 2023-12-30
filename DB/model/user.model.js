@@ -43,6 +43,9 @@ const userSchema = new Schema({
     gender: {
         type: String,
         enum: ['Female', 'Male'],
+    }, sendCode: {
+        type:String,
+        default:null
     }
 }, {
     timestamps: true,//وينتا انضافت الصورة
