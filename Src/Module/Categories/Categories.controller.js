@@ -16,16 +16,19 @@ export const createCategory = async (req, res) => {
 }
 
 export const getCategories = async (req, res) => {
-    const categories = await categoryModel.find().populate('products'); return res.status(200).json({ message: "Success", categories });
+    const categories = await categoryModel.find().populate('products');
+    return res.status(200).json({ message: "Success", categories });
 }
 
 export const getActiveCategories = async (req, res) => {
-    const categories = await categoryModel.find({ status: 'Active' }).populate('products'); return res.status(200).json({ message: "Success", categories });
+    const categories = await categoryModel.find({ status: 'Active' }).populate('products');
+    return res.status(200).json({ message: "Success", categories });
 }
 
 export const getCategory = async (req, res) => {
     const { id } = req.params;
-    const category = await categoryModel.findById(id).populate('products'); return res.status(200).json({ message: "Success", category });
+    const category = await categoryModel.findById(id).populate('products');
+    return res.status(200).json({ message: "Success", category });
 
 }
 
@@ -42,6 +45,6 @@ export const deleteCategory = async (req, res) => {
 
 export const getSimilarProduct = async (req, res) => {
     const { categoryId, productId } = req.params;
-    const products = await productModel.find({ categoryId, _id: { $ne: productId } }).limit(10);
+    const products = await productModel.find({ categoryId, _id: { $ne: productId } }).limit(3);
     return res.json({ message: "Success", products });
 }

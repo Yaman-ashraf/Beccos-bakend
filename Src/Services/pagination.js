@@ -4,7 +4,7 @@ export function pagination(page, limit) {
     }
 
     if (!limit || limit <= 0) {
-        limit = 10;
+        limit = 3;
     }
 
     const skip = (page - 1) * limit;
