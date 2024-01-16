@@ -105,6 +105,10 @@ export const getProduct = async (req, res) => {
             path: 'reviews'
         }]);
 
+        if (!product) {
+            return res.status(404).json({ message: "Product Not Found" });
+        }
+
         //calc rating
         let calcRating = 0;
         product = product.toObject();
@@ -181,25 +185,60 @@ export const getActiveProducts = async (req, res) => {
 }
 
 export const deleteProduct = async (req, res) => {
-    try {
-        const productId = req.params.id;
+    const { productId } = req.params;
 
-        // Check if the product exists
-        const existingProduct = await productModel.findById(productId);
-        if (!existingProduct) {
-            return res.status(404).json({ message: "Product not found" });
-        }
-
-        // Perform the deletion
-        await productModel.findByIdAndDelete(productId);
-
-        await cloudinary.uploader.destroy(existingProduct.image.public_id);
-        for (const subImage of existingProduct.subImages) {
-            await cloudinary.uploader.destroy(subImage.public_id);
-        }
-
-        return res.status(200).json({ message: "Product deleted successfully" });
-    } catch (error) {
-        return res.status(500).json({ message: "Error", error: error.stack });
+    // Check if the product exists
+    const product = await productModel.findByIdAndDelete(productId);
+    if (!product) {
+        return res.status(404).json({ message: "Product not found" });
     }
+    return res.status(200).json({ message: "Success" });
+}
+
+export const updateProducts = async (req, res) => {
+    const { productId } = req.params;
+    req.body.slug = slugify(req.body.name);
+
+    //count final pricr:
+    const { price, discount } = req.body;
+    req.body.finalPrice = price - (price * (discount || 0) / 100);
+
+    let product = await productModel.findById(productId);
+    if (!product) {
+        return res.status(404).json({ message: "Product not fount" });
+    }
+
+    if (req.files.image) {
+        //create a file to a main image of the product:
+        const { secure_url, public_id } = await cloudinary.uploader.upload(
+            req.files.image[0].path,
+            { folder: `${process.env.APP_NAME}/product/${req.body.name}/image` }
+        );
+        //create a file to a product:
+        req.body.image = { secure_url, public_id };
+        cloudinary.uploader.destroy(product.image.public_id);
+    }
+
+    if (req.files.subImages) {
+        //create a file to a sub images of the product:
+        for (const file of product.subImages) {
+            cloudinary.uploader.destroy(file.public_id);
+        }
+
+        req.body.subImages = [];//empty arr
+        for (const file of req.files.subImages) {
+            const { secure_url, public_id } = await cloudinary.uploader.upload(
+                file.path,
+                { folder: `${process.env.APP_NAME}/product/${req.body.name}/subImages` }
+            );
+            req.body.subImages.push({ secure_url, public_id });
+        }
+        cloudinary.uploader.destroy(product.subImages.public_id);
+    }
+
+    //update updatedBy to user who sign in
+    req.body.updatedBy = req.user._id;
+
+    product = await productModel.findByIdAndUpdate(productId, req.body, { new: true });
+    return res.status(200).json(product);
 }

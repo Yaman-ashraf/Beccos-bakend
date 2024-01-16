@@ -50,6 +50,8 @@ const productSchema = new Schema({
         enum: ['S', 'M', 'L', 'XL'],
     },],
     categoryId: { type: Types.ObjectId, ref: 'Category', required: true },
+    brandId: { type: Types.ObjectId, ref: 'Brand' },
+
     createdBy: { type: Types.ObjectId, ref: 'User', required: true },
     updatedBy: { type: Types.ObjectId, ref: 'User', required: true },
 }, {

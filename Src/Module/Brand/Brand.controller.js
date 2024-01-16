@@ -1,4 +1,5 @@
 import brandModel from "../../../DB/model/Brand.model.js";
+import productModel from "../../../DB/model/Product.model.js";
 import sliderModel from "../../../DB/model/Slider.model.js";
 import cloudinary from "../../Services/cloudinary.js";
 
@@ -35,4 +36,11 @@ export const getBrand = async (req, res) => {
         return res.status(404).json({ message: ' Brand not Found' });
 
     return res.status(200).json({ message: "Success", brand });
+}
+
+export const getProducts = async (req, res) => {
+    const { brandId } = req.params;
+    const products = await productModel.find({ brandId });
+
+    return res.status(200).json({ message: "Success", products });
 }

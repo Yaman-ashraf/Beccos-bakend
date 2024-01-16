@@ -35,13 +35,14 @@ export const getCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findById(id);
-    
+
     if (!category) {
         return res.status(404).json({ message: "Not Found" });
     }
 
-    
+
     await categoryModel.findByIdAndDelete(id);
+    await productModel.deleteMany({ categoryId: id });
 
     return res.status(200).json({ message: "Success" });
 }
