@@ -35,11 +35,14 @@ export const getCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findById(id);
+    
     if (!category) {
         return res.status(404).json({ message: "Not Found" });
     }
-    // await cloudinary.uploader.destroy(category.image.public_id);
+
+    
     await categoryModel.findByIdAndDelete(id);
+
     return res.status(200).json({ message: "Success" });
 }
 

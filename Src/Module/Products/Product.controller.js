@@ -56,9 +56,11 @@ export const getProducts = async (req, res) => {
         queryObj = queryObj.replace(
             /\b(gt|gte|lt|lte|in|nin|eq|neq)\b/g,
             match => `$${match}`
-            );
+        );
         queryObj = JSON.parse(queryObj);//برجعهم 
+
         const mongooseQuery = productModel.find(queryObj);
+
         if (req.query.search) {
             mongooseQuery.find({
                 name: { $regex: req.query.search, $options: 'i' }
@@ -125,13 +127,56 @@ export const getProduct = async (req, res) => {
 
 export const getActiveProducts = async (req, res) => {
     try {
-        const products = await productModel.find({ status: 'Active' }).populate({
-            path: 'categoryId',
+        let queryObj = { ...req.query };
+        let { skip, limit } = pagination(req.query.page, req.query.limit);
+        const execQuery = ["page", "size", "limit", "sort", "search"];
+        execQuery.map((ele) => {
+            delete queryObj[ele];
         });
-        return res.status(200).json({ message: "Success", products });
+        queryObj = JSON.stringify(queryObj);
+        queryObj = queryObj.replace(
+            /\b(gt|gte|lt|lte|in|nin|eq|neq)\b/g,
+            (match) => ` $${match}`
+        );
+        queryObj = JSON.parse(queryObj);
 
-    } catch (erroe) {
-        return res.status(500).json({ message: "Error", erroe: erroe.stack })
+        const mongooseQuery = productModel.find(queryObj).limit(limit).skip(skip);
+
+        if (req.query.search) {
+            mongooseQuery.find({
+                name: { $regex: req.query.search, $options: "i" },
+            });
+        }
+        const products = await mongooseQuery.find({ status: 'Active' })
+            .sort(req.query.sort?.replaceAll(",", " "))
+            .select(req.query.fields?.replaceAll(",", " "))
+            .populate({
+                path: "reviews",
+            });
+        const counts = await productModel.estimatedDocumentCount();
+
+        for (let i = 0; i < products.length; i++) {
+            let calcRating = 0;
+            for (let j = 0; j < products[i].reviews.length; j++) {
+                calcRating += products[i].reviews[j].rating;
+            }
+
+            let avgRating = calcRating / products[i].reviews.length;
+            const product = products[i].toObject();
+            product.avgRating = avgRating;
+            products[i] = product;
+        }
+
+        return res
+            .status(200)
+            .json({
+                message: "success",
+                count: products.length,
+                total: counts,
+                products,
+            });
+    } catch (error) {
+        return res.status(500).json({ message: "error", error: error.stack });
     }
 }
 
