@@ -48,3 +48,14 @@ export const getSimilarProduct = async (req, res) => {
     const products = await productModel.find({ categoryId, _id: { $ne: productId } }).limit(3);
     return res.json({ message: "Success", products });
 }
+
+export const updateCategory = async (req, res) => {
+    const { id } = req.params;
+    req.body.slug = slugify(req.body.name);
+    const category = await categoryModel.findByIdAndUpdate(id, req.body, { new: true });
+    if (!category) {
+        return res.status(404).json({ message: "Category Not Found" });
+    }
+
+    return res.status(200).json({ message: "Success", category });
+}

@@ -12,6 +12,7 @@ router.get('/', categoriesController.getCategories)
 router.get('/active', categoriesController.getActiveCategories)
 router.get('/:id', categoriesController.getCategory);
 router.delete('/:id', auth(endPoint.delete), categoriesController.deleteCategory);
+router.patch('/:id', auth(endPoint.update), categoriesController.updateCategory);
 router.get('/similarProduct/:categoryId/:productId', categoriesController.getSimilarProduct);
 
 
