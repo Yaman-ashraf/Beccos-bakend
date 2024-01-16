@@ -91,6 +91,7 @@ export const sendCode = async (req, res) => {
     await sendEmail(email, "Reset Password", html);
     return res.status(200).json({ message: 'Success', user });
 }
+
 export const forgetPassword = async (req, res) => {
     const { email, code, password } = req.body;
     const user = await userModel.findOne({ email });

@@ -52,14 +52,13 @@ export const getProducts = async (req, res) => {
         execQuery.map((ele) => {
             delete queryObj[ele];
         });
-        queryObj = JSON.stringify(queryObj);//بحول اللي دخلته -عشان يككون البرايس اقل من- لسترينغ
-        queryObj = queryObj.replace(/\b(gt|gte|lt|lte|in|nin|eq|neq)\b/g, match => `$${match}`)
+        queryObj = JSON.stringify(queryObj);//بحول اللي دخلته -عشان يكون البرايس اقل من- لسترينغ
+        queryObj = queryObj.replace(
+            /\b(gt|gte|lt|lte|in|nin|eq|neq)\b/g,
+            match => `$${match}`
+            );
         queryObj = JSON.parse(queryObj);//برجعهم 
-        const { skip, limit } = pagination(req.query.page, req.query.limit);
-        const mongooseQuery = productModel.find(queryObj).skip(skip).limit(limit);
-        // .populate({
-        //     path: 'categoryId',
-        // });
+        const mongooseQuery = productModel.find(queryObj);
         if (req.query.search) {
             mongooseQuery.find({
                 name: { $regex: req.query.search, $options: 'i' }
