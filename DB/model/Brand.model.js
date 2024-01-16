@@ -1,6 +1,10 @@
 import mongoose, { Schema, model, Types } from 'mongoose'
 
 const brandSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
     image: {
         type: Object,
         required: true,
