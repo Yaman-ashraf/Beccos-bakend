@@ -37,7 +37,7 @@ export const deleteCategory = async (req, res) => {
     const category = await categoryModel.findById(id);
 
     if (!category) {
-        return res.status(404).json({ message: "Not Found" });
+        return res.status(404).json({ message: "Categories not found" });
     }
 
 
@@ -58,7 +58,7 @@ export const updateCategory = async (req, res) => {
     req.body.slug = slugify(req.body.name);
     const category = await categoryModel.findByIdAndUpdate(id, req.body, { new: true });
     if (!category) {
-        return res.status(404).json({ message: "Category Not Found" });
+        return res.status(404).json({ message: "Category not found" });
     }
 
     return res.status(200).json({ message: "Success", category });

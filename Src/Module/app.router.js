@@ -30,6 +30,6 @@ export const appRouter = (app, express) => {
 
 
     app.get("*", (req, res) => {
-        return res.status(404).json({ message: "Page Not Found" });
+        return res.status(404).json({ message: "Page not found" });
     })
 }

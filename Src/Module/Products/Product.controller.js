@@ -106,7 +106,7 @@ export const getProduct = async (req, res) => {
         }]);
 
         if (!product) {
-            return res.status(404).json({ message: "Product Not Found" });
+            return res.status(404).json({ message: "Product not found" });
         }
 
         //calc rating
