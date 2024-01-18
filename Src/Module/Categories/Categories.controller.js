@@ -1,6 +1,5 @@
 import slugify from "slugify";
 import categoryModel from "../../../DB/model/Category.model.js";
-import cloudinary from "../../Services/cloudinary.js";
 import productModel from "../../../DB/model/Product.model.js";
 
 export const createCategory = async (req, res) => {
@@ -37,14 +36,18 @@ export const deleteCategory = async (req, res) => {
     const category = await categoryModel.findById(id);
 
     if (!category) {
-        return res.status(404).json({ message: "Categories not found" });
+        return res.status(404).json({ message: "Category not found" });
     }
+    try {
+        //delete cat
+        await categoryModel.findByIdAndDelete(id);
+        //delete associeated prod
+        await productModel.deleteMany({ categoryId: id });
 
-
-    await categoryModel.findByIdAndDelete(id);
-    await productModel.deleteMany({ categoryId: id });
-
-    return res.status(200).json({ message: "Success" });
+        return res.status(200).json({ message: "Success" });
+    } catch (error) {
+        return res.status(404).json({ message: "Error", error: error.stack });
+    }
 }
 
 export const getSimilarProduct = async (req, res) => {

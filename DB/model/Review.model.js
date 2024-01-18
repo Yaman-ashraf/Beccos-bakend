@@ -23,6 +23,9 @@ const reviewSchema = new Schema({
         required: true,
         ref: 'Order',
     },
+    image: {
+        type:Object,
+    },
 }, { timestamps: true })
 const reviewModel = mongoose.model.Review || model('Review', reviewSchema);
 export default reviewModel;

@@ -108,7 +108,6 @@ export const getProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
-
         //calc rating
         let calcRating = 0;
         product = product.toObject();
@@ -123,7 +122,6 @@ export const getProduct = async (req, res) => {
         }
 
         return res.status(200).json({ message: "Success", product });
-
     } catch (erroe) {
         return res.status(500).json({ message: "Error", erroe: erroe.stack })
     }
@@ -174,7 +172,7 @@ export const getActiveProducts = async (req, res) => {
         return res
             .status(200)
             .json({
-                message: "success",
+                message: "Success",
                 count: products.length,
                 total: counts,
                 products,
@@ -182,17 +180,6 @@ export const getActiveProducts = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: "error", error: error.stack });
     }
-}
-
-export const deleteProduct = async (req, res) => {
-    const { productId } = req.params;
-
-    // Check if the product exists
-    const product = await productModel.findByIdAndDelete(productId);
-    if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-    }
-    return res.status(200).json({ message: "Success" });
 }
 
 export const updateProducts = async (req, res) => {
@@ -240,5 +227,16 @@ export const updateProducts = async (req, res) => {
     req.body.updatedBy = req.user._id;
 
     product = await productModel.findByIdAndUpdate(productId, req.body, { new: true });
-    return res.status(200).json(product);
+    return res.status(200).json({ message: "Success", product });
+}
+
+export const deleteProduct = async (req, res) => {
+    const { productId } = req.params;
+
+    // Check if the product exists
+    const product = await productModel.findByIdAndDelete(productId);
+    if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+    }
+    return res.status(200).json({ message: "Success" });
 }
