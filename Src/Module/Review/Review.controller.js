@@ -5,6 +5,7 @@ import cloudinary from "../../Services/cloudinary.js";
 export const create = async (req, res) => {
     const { productId } = req.params;
     const { comment, rating } = req.body;
+    //if order already delivered
     const order = await orderModel.findOne({
         userId: req.user._id,
         status: "delivered",
@@ -12,9 +13,9 @@ export const create = async (req, res) => {
     });
     //delivered order?
     if (!order) {
-        return res.status(400).send("can't review this order");
+        return res.status(400).json({ message: "Can't review this order" });
     }
-    //commint just once
+    //if user already comment, comment just once
     const checkReview = await reviewModel.findOne({
         userId: req.user._id,
         productId: productId.toString(),
@@ -22,6 +23,7 @@ export const create = async (req, res) => {
     if (checkReview) {
         return res.status(409).json({ message: "Already exists" });
     }
+    //upload image to cloudinary
     if (req.file) {
         const { secure_url, public_id } = await cloudinary.uploader.upload(
             req.file.path, {
@@ -29,6 +31,7 @@ export const create = async (req, res) => {
         });
         req.body.image = { secure_url, public_id };
     }
+    //create a review in db
     const review = await reviewModel.create({
         comment, rating,
         userId: req.user._id,

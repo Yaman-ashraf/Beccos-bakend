@@ -1,6 +1,5 @@
 import brandModel from "../../../DB/model/Brand.model.js";
 import productModel from "../../../DB/model/Product.model.js";
-import sliderModel from "../../../DB/model/Slider.model.js";
 import cloudinary from "../../Services/cloudinary.js";
 
 export const createBrand = async (req, res) => {
@@ -35,6 +34,30 @@ export const getBrand = async (req, res) => {
     if (!brand)
         return res.status(404).json({ message: ' Brand not Found' });
 
+    return res.status(200).json({ message: "Success", brand });
+}
+
+export const updateBrand = async (req, res) => {
+    const { brandId } = req.params;
+    let brand = await brandModel.findById(brandId);
+    if (!brand) {
+        return res.status(404).json({ message: "Slider not found" });
+    }
+    //update
+    if (req.file) {
+        //create a file to a main image of the product:
+        const { secure_url, public_id } = await cloudinary.uploader.upload(
+            req.file.path,
+            { folder: `${process.env.APP_NAME}/brand` }
+        );
+        //create a file to a product:
+        req.body.image = { secure_url, public_id };
+        cloudinary.uploader.destroy(brand.image.public_id);
+    }
+    //update updatedBy to user who sign in
+    req.body.updatedBy = req.user._id;
+
+    brand = await brandModel.findByIdAndUpdate(brandId, req.body, { new: true });
     return res.status(200).json({ message: "Success", brand });
 }
 

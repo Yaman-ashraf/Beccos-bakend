@@ -7,6 +7,7 @@ import fileUpload, { fileValidation } from "../../Services/multer.js";
 const router = Router();
 router.post('/', auth(endPoint.create), fileUpload(fileValidation.image).single('image'), SliderController.createSlider);
 router.get('/', auth(endPoint.getAll), SliderController.getAllSlider);
+router.get('/:id', SliderController.getSlider);
 router.get('/active', SliderController.getActiveSlider);
 router.put('/:imageId', auth(endPoint.update), fileUpload(fileValidation.image).single('image'), SliderController.updateSlider);
 router.delete('/:imageId', auth(endPoint.delete), SliderController.deleteSlider);

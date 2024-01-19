@@ -5,6 +5,7 @@ const roles = {
 const endPoint = {
     create: [roles.Admin],
     delete: [roles.Admin],
+    update: [roles.Admin],
 }
 
 export default endPoint;

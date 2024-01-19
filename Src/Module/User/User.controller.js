@@ -55,3 +55,13 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ message: "Error", error: error.stack });
     }
 }
+
+export const getUserData = async (req, res) => {
+    const user = await userModel.findById(req.user._id);
+    return res.status(200).json({ message: "Success", user });
+}
+
+export const getUser = async (req, res) => {
+    const user = await userModel.findById(req.params.userId); //from url
+    return res.status(200).json({ message: "Success", user });
+}

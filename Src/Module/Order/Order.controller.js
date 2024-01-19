@@ -100,3 +100,50 @@ export const cancelOrder = async (req, res) => {
     }
     return res.status(200).json({ message: "Success" });
 }
+
+export const changeStatus = async (req, res) => {
+    const { orderId } = req.params;
+    const order = await orderModel.findById(orderId);
+    if (!order) {
+        return res.status(400).json({ message: "Order not found" });
+    }
+    //order status is cancelled
+    if (order.status === 'cancelled') {
+        return res.status(400).json({ message: "This Order has been Cancelled" });
+    }
+    //new order
+    const newOrder = await orderModel.findByIdAndUpdate(orderId, { status: req.body.status }, { new: true });
+    //if order cancelled, edet stock and +1
+    if (newOrder.status == 'cancelled') {
+        for (const product of order.products) {
+            await productModel.findByIdAndUpdate({
+                _id: product.productId
+            }, {
+                $inc: {
+                    stock: product.quantity
+                }
+            });
+        }
+    }
+    return res.status(200).json({ message: "Success", order })
+}
+
+export const allOrder = async (req, res) => {
+    const orders = await orderModel.find({}).populate('userId');
+
+    const counts = await orderModel.estimatedDocumentCount();
+
+    return res.status(200).json({
+        message: "Success",
+        count: orders.length,
+        total: counts, orders,
+    });
+}
+
+export const getDetails = async (req, res) => {
+    const order = await orderModel.findById(req.params.orderId).populate('userId');
+
+
+    return res.status(200).json({ message: "Success", order });
+}
+

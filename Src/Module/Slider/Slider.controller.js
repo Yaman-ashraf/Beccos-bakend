@@ -23,17 +23,6 @@ export const getActiveSlider = async (req, res) => {
     return res.json({ message: "Success", count: sliders.length, sliders });
 }
 
-export const deleteSlider = async (req, res) => {
-    const slider = await sliderModel.findByIdAndDelete(req.params.imageId);
-    if (!slider) {
-        return res.status(404).send({ message: "Image not found" });
-    }
-    //delete image from cloud.
-    cloudinary.uploader.destroy(slider.image.public_id);
-
-    return res.status(200).json({ message: "Success" });
-}
-
 export const updateSlider = async (req, res) => {
     const { imageId } = req.params;
     let slider = await sliderModel.findById(imageId);
@@ -56,4 +45,23 @@ export const updateSlider = async (req, res) => {
 
     slider = await sliderModel.findByIdAndUpdate(imageId, req.body, { new: true });
     return res.status(200).json({ message: "Success", slider });
+}
+
+export const getSlider = async (req, res) => {
+    const slider = await sliderModel.findById(req.params.id);
+    if (!slider) {
+        return res.status(404).json({ message: "slider not found" })
+    }
+    return res.status(200).json({ message: "Success", slider });
+}
+
+export const deleteSlider = async (req, res) => {
+    const slider = await sliderModel.findByIdAndDelete(req.params.imageId);
+    if (!slider) {
+        return res.status(404).send({ message: "Image not found" });
+    }
+    //delete image from cloud.
+    cloudinary.uploader.destroy(slider.image.public_id);
+
+    return res.status(200).json({ message: "Success" });
 }

@@ -7,6 +7,9 @@ const endPoint = {
     getUserOrder: [roles.User],
     cancel: [roles.User],
     delete: [roles.User],
+    changeStatus: [roles.Admin],
+    allOrder: [roles.Admin],
+    details: [roles.User, roles.Admin],
 }
 
 export default endPoint;

@@ -5,6 +5,9 @@ import * as userController from './User.controller.js';
 const router = Router();
 
 router.get('/', auth(endPoint.getUsers), userController.getUsers);
-router.patch('/:userId',auth(endPoint.updateUser),userController.updateUser)
+router.patch('/:userId', auth(endPoint.updateUser), userController.updateUser)
+//get user data
+router.get('/getUserData', auth(endPoint.getUserData), userController.getUserData);
+router.get('/:userId', userController.getUser);
 
 export default router;

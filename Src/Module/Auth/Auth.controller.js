@@ -7,7 +7,7 @@ import { customAlphabet } from "nanoid";
 export const signup = async (req, res) => {
     try {
         const { name, email, password, role = 'User' } = req.body;
-
+        
         const user = await userModel.findOne({ email });
 
         if (user) {

@@ -5,6 +5,7 @@ const roles = {
 const endPoint = {
     getUsers: [roles.Admin],
     updateUser: [roles.Admin],
+    getUserData: [roles.Admin, roles.User],
 }
 
 export default endPoint;
