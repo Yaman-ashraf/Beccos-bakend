@@ -43,21 +43,29 @@ export const updateBrand = async (req, res) => {
     if (!brand) {
         return res.status(404).json({ message: "Slider not found" });
     }
-    //update
+
+    //change name just
+    if (req.body.name) {
+        brand.name = req.body.name;
+    }
+
+    //update image
     if (req.file) {
         //create a file to a main image of the product:
         const { secure_url, public_id } = await cloudinary.uploader.upload(
             req.file.path,
             { folder: `${process.env.APP_NAME}/brand` }
         );
+
         //create a file to a product:
-        req.body.image = { secure_url, public_id };
         cloudinary.uploader.destroy(brand.image.public_id);
+        brand.image = { secure_url, public_id };
     }
+
     //update updatedBy to user who sign in
     req.body.updatedBy = req.user._id;
 
-    brand = await brandModel.findByIdAndUpdate(brandId, req.body, { new: true });
+    brand = await brand.save();
     return res.status(200).json({ message: "Success", brand });
 }
 
