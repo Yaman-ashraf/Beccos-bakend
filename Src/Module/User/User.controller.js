@@ -2,7 +2,6 @@ import userModel from "../../../DB/model/user.model.js";
 import { pagination } from "../../Services/pagination.js";
 
 export const getUsers = async (req, res) => {
-    const { skip, limit } = pagination(req.query.page, req.query.limit);
 
     let queryObj = { ...req.query };
     const execQuery = ['page', 'limit', 'size', 'sort'];

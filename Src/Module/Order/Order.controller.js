@@ -131,12 +131,12 @@ export const changeStatus = async (req, res) => {
 export const allOrder = async (req, res) => {
     const orders = await orderModel.find({}).populate('userId');
 
-    // const counts = await orderModel.estimatedDocumentCount();
+    const counts = await orderModel.estimatedDocumentCount();
 
     return res.status(200).json({
         message: "Success",
         count: orders.length,
-        orders
+        total: counts, orders
     });
 }
 
